@@ -480,6 +480,143 @@
 /* ==========================================================================
    API Keys
    ========================================================================== */
+/* Get API Key Card */
+.respira-lite-get-key-card {
+	background: linear-gradient(135deg, #ffffff 0%, var(--respira-background) 100%);
+	border-left: 4px solid var(--respira-accent);
+}
+
+.respira-lite-get-key-header {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	margin-bottom: 16px;
+}
+
+.respira-lite-get-key-header .dashicons {
+	font-size: 32px;
+	width: 32px;
+	height: 32px;
+	color: var(--respira-accent);
+}
+
+.respira-lite-get-key-header h2 {
+	margin: 0;
+	color: var(--respira-primary);
+}
+
+.respira-lite-get-key-description {
+	font-size: 15px;
+	color: var(--respira-text);
+	margin-bottom: 24px;
+	line-height: 1.6;
+}
+
+.respira-lite-get-key-steps {
+	margin-bottom: 24px;
+}
+
+.respira-lite-get-key-steps ol {
+	list-style: none;
+	counter-reset: step-counter;
+	padding: 0;
+	margin: 0;
+}
+
+.respira-lite-get-key-steps li {
+	counter-increment: step-counter;
+	position: relative;
+	padding: 16px 16px 16px 60px;
+	margin-bottom: 12px;
+	background-color: #ffffff;
+	border: 1px solid var(--respira-border);
+	border-radius: 6px;
+	transition: border-color 0.3s ease;
+}
+
+.respira-lite-get-key-steps li:hover {
+	border-color: var(--respira-accent);
+}
+
+.respira-lite-get-key-steps li::before {
+	content: counter(step-counter);
+	position: absolute;
+	left: 16px;
+	top: 16px;
+	width: 32px;
+	height: 32px;
+	background-color: var(--respira-accent);
+	color: #ffffff;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-weight: 700;
+	font-size: 16px;
+}
+
+.respira-lite-get-key-steps li strong {
+	display: block;
+	color: var(--respira-primary);
+	margin-bottom: 6px;
+	font-size: 15px;
+}
+
+.respira-lite-get-key-steps li p {
+	margin: 0;
+	color: var(--respira-text-light);
+	font-size: 14px;
+	line-height: 1.5;
+}
+
+.respira-lite-get-key-cta {
+	text-align: center;
+	padding-top: 16px;
+	border-top: 1px solid var(--respira-border);
+}
+
+.respira-lite-get-key-cta .button-primary {
+	background-color: var(--respira-primary);
+	border-color: var(--respira-primary);
+	font-size: 16px;
+	font-weight: 600;
+	padding: 10px 24px;
+	height: auto;
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.respira-lite-get-key-cta .button-primary:hover,
+.respira-lite-get-key-cta .button-primary:focus {
+	background-color: var(--respira-accent);
+	border-color: var(--respira-accent);
+	transform: translateY(-2px);
+}
+
+.respira-lite-get-key-cta .button-primary .dashicons {
+	font-size: 20px;
+	width: 20px;
+	height: 20px;
+}
+
+.respira-lite-get-key-help {
+	margin-top: 12px;
+	font-size: 14px;
+	color: var(--respira-text-light);
+}
+
+.respira-lite-get-key-help a {
+	color: var(--respira-accent);
+	text-decoration: none;
+	font-weight: 500;
+}
+
+.respira-lite-get-key-help a:hover {
+	text-decoration: underline;
+}
+
 .respira-lite-key-display {
 	display: flex;
 	gap: 12px;

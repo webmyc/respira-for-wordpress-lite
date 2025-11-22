@@ -25,6 +25,56 @@ require_once RESPIRA_LITE_PLUGIN_DIR . 'admin/views/header.php';
 		<?php esc_html_e( 'Manage API keys for connecting AI coding assistants to your WordPress site.', 'respira-for-wordpress-lite' ); ?>
 	</p>
 
+	<!-- Get API Key Notice -->
+	<div class="respira-lite-card respira-lite-get-key-card">
+		<div class="respira-lite-get-key-content">
+			<div class="respira-lite-get-key-header">
+				<span class="dashicons dashicons-admin-network"></span>
+				<h2><?php esc_html_e( 'Get Your API Key', 'respira-for-wordpress-lite' ); ?></h2>
+			</div>
+			<p class="respira-lite-get-key-description">
+				<?php esc_html_e( 'To use Respira for WordPress Lite, you need to get an API key from your Respira account.', 'respira-for-wordpress-lite' ); ?>
+			</p>
+
+			<div class="respira-lite-get-key-steps">
+				<ol>
+					<li>
+						<strong><?php esc_html_e( 'Sign in to your Respira account', 'respira-for-wordpress-lite' ); ?></strong>
+						<p><?php esc_html_e( 'If you don\'t have an account yet, you can create one for free.', 'respira-for-wordpress-lite' ); ?></p>
+					</li>
+					<li>
+						<strong><?php esc_html_e( 'Navigate to API Keys', 'respira-for-wordpress-lite' ); ?></strong>
+						<p><?php esc_html_e( 'Go to your account settings and find the API Keys section.', 'respira-for-wordpress-lite' ); ?></p>
+					</li>
+					<li>
+						<strong><?php esc_html_e( 'Generate a new key', 'respira-for-wordpress-lite' ); ?></strong>
+						<p><?php esc_html_e( 'Create a new API key for this WordPress site.', 'respira-for-wordpress-lite' ); ?></p>
+					</li>
+					<li>
+						<strong><?php esc_html_e( 'Copy and use', 'respira-for-wordpress-lite' ); ?></strong>
+						<p><?php esc_html_e( 'Copy the key and use it in your AI assistant configuration below.', 'respira-for-wordpress-lite' ); ?></p>
+					</li>
+				</ol>
+			</div>
+
+			<div class="respira-lite-get-key-cta">
+				<a href="https://respira.press/login" class="button button-primary button-hero" target="_blank" rel="noopener noreferrer">
+					<span class="dashicons dashicons-external"></span>
+					<?php esc_html_e( 'Get API Key from Respira.press', 'respira-for-wordpress-lite' ); ?>
+				</a>
+				<p class="respira-lite-get-key-help">
+					<?php
+					printf(
+						/* translators: %s: Support URL */
+						esc_html__( 'Need help? %s', 'respira-for-wordpress-lite' ),
+						'<a href="https://respira.press/support" target="_blank" rel="noopener noreferrer">' . esc_html__( 'Contact Support', 'respira-for-wordpress-lite' ) . '</a>'
+					);
+					?>
+				</p>
+			</div>
+		</div>
+	</div>
+
 	<!-- Security Warning -->
 	<div class="notice notice-warning inline">
 		<p>
@@ -33,83 +83,13 @@ require_once RESPIRA_LITE_PLUGIN_DIR . 'admin/views/header.php';
 		</p>
 	</div>
 
-	<!-- Generate New Key Form -->
-	<div class="respira-lite-card">
-		<h2><?php esc_html_e( 'Generate New API Key', 'respira-for-wordpress-lite' ); ?></h2>
-
-		<form id="respira-lite-generate-key-form">
-			<table class="form-table">
-				<tr>
-					<th scope="row">
-						<label for="key_name">
-							<?php esc_html_e( 'Key Name', 'respira-for-wordpress-lite' ); ?>
-						</label>
-					</th>
-					<td>
-						<input type="text"
-							   id="key_name"
-							   name="key_name"
-							   class="regular-text"
-							   placeholder="<?php esc_attr_e( 'e.g., Cursor IDE, Claude Code', 'respira-for-wordpress-lite' ); ?>"
-							   value="<?php esc_attr_e( 'Default Key', 'respira-for-wordpress-lite' ); ?>">
-						<p class="description">
-							<?php esc_html_e( 'Give this key a descriptive name to help you remember where it is used.', 'respira-for-wordpress-lite' ); ?>
-						</p>
-					</td>
-				</tr>
-			</table>
-
-			<p class="submit">
-				<button type="submit" class="button button-primary">
-					<?php esc_html_e( 'Generate API Key', 'respira-for-wordpress-lite' ); ?>
-				</button>
-			</p>
-		</form>
-
-		<!-- Generated Key Display (hidden by default) -->
-		<div id="respira-lite-generated-key" style="display: none;">
-			<div class="notice notice-success inline">
-				<p><strong><?php esc_html_e( 'API Key Generated Successfully!', 'respira-for-wordpress-lite' ); ?></strong></p>
-				<p><?php esc_html_e( 'Copy this key now. For security reasons, it will only be shown once.', 'respira-for-wordpress-lite' ); ?></p>
-			</div>
-
-			<div class="respira-lite-key-display">
-				<input type="text"
-					   id="respira-lite-key-value"
-					   class="large-text code"
-					   readonly>
-				<button type="button" class="button button-secondary" id="respira-lite-copy-key">
-					<span class="dashicons dashicons-clipboard"></span>
-					<?php esc_html_e( 'Copy', 'respira-for-wordpress-lite' ); ?>
-				</button>
-			</div>
-
-			<div class="respira-lite-key-instructions">
-				<h3><?php esc_html_e( 'How to Use This Key', 'respira-for-wordpress-lite' ); ?></h3>
-				<ol>
-					<li><?php esc_html_e( 'Copy the API key above', 'respira-for-wordpress-lite' ); ?></li>
-					<li><?php esc_html_e( 'Add it to your AI coding assistant configuration', 'respira-for-wordpress-lite' ); ?></li>
-					<li>
-						<?php
-						printf(
-							/* translators: %s: REST API URL */
-							esc_html__( 'Use this REST API endpoint: %s', 'respira-for-wordpress-lite' ),
-							'<code>' . esc_html( rest_url( RESPIRA_LITE_REST_NAMESPACE ) ) . '</code>'
-						);
-						?>
-					</li>
-				</ol>
-			</div>
-		</div>
-	</div>
-
 	<!-- Existing Keys -->
 	<div class="respira-lite-card">
 		<h2><?php esc_html_e( 'Your API Keys', 'respira-for-wordpress-lite' ); ?></h2>
 
 		<?php if ( empty( $api_keys ) ) : ?>
 			<p class="description">
-				<?php esc_html_e( 'No API keys found. Generate one above to get started.', 'respira-for-wordpress-lite' ); ?>
+				<?php esc_html_e( 'No API keys found. Get your API key from Respira.press to get started.', 'respira-for-wordpress-lite' ); ?>
 			</p>
 		<?php else : ?>
 			<table class="wp-list-table widefat fixed striped">
