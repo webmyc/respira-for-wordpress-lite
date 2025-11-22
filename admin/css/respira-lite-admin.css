@@ -1,0 +1,918 @@
+/**
+ * Respira for WordPress Lite - Admin Styles
+ *
+ * @package    Respira_For_WordPress_Lite
+ * @subpackage Respira_For_WordPress_Lite/admin/css
+ * @since      1.0.0
+ */
+
+/* ==========================================================================
+   Brand Colors
+   ========================================================================== */
+:root {
+	--respira-primary: #1D3557;
+	--respira-accent: #457B9D;
+	--respira-success: #2A9D8F;
+	--respira-warning: #F4A261;
+	--respira-error: #E63946;
+	--respira-background: #F1FAEE;
+	--respira-border: #E0E0E0;
+	--respira-text: #333333;
+	--respira-text-light: #666666;
+	--respira-shadow: rgba(29, 53, 87, 0.1);
+	--respira-shadow-hover: rgba(29, 53, 87, 0.15);
+}
+
+/* ==========================================================================
+   Base Wrapper Styles
+   ========================================================================== */
+.respira-lite-dashboard,
+.respira-lite-api-keys,
+.respira-lite-settings,
+.respira-lite-audit-log {
+	margin: 20px 20px 20px 0;
+	max-width: 1400px;
+}
+
+.respira-lite-dashboard h1,
+.respira-lite-api-keys h1,
+.respira-lite-settings h1,
+.respira-lite-audit-log h1 {
+	color: var(--respira-primary);
+	margin-bottom: 10px;
+}
+
+/* ==========================================================================
+   Grid Layout
+   ========================================================================== */
+.respira-lite-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+	gap: 24px;
+	margin-bottom: 24px;
+}
+
+@media screen and (max-width: 782px) {
+	.respira-lite-grid {
+		grid-template-columns: 1fr;
+	}
+}
+
+/* ==========================================================================
+   Card Component
+   ========================================================================== */
+.respira-lite-card {
+	background: #ffffff;
+	border: 1px solid var(--respira-border);
+	border-radius: 8px;
+	padding: 24px;
+	margin-bottom: 24px;
+	box-shadow: 0 2px 4px var(--respira-shadow);
+	transition: box-shadow 0.3s ease;
+}
+
+.respira-lite-card:hover {
+	box-shadow: 0 4px 8px var(--respira-shadow-hover);
+}
+
+.respira-lite-card h2 {
+	margin-top: 0;
+	margin-bottom: 16px;
+	color: var(--respira-primary);
+	font-size: 20px;
+	font-weight: 600;
+	border-bottom: 2px solid var(--respira-background);
+	padding-bottom: 12px;
+}
+
+.respira-lite-card h3 {
+	color: var(--respira-primary);
+	font-size: 16px;
+	font-weight: 600;
+	margin-top: 20px;
+	margin-bottom: 12px;
+}
+
+.respira-lite-card .description {
+	color: var(--respira-text-light);
+	font-size: 14px;
+	line-height: 1.6;
+}
+
+/* ==========================================================================
+   Usage Card & Stats
+   ========================================================================== */
+.respira-lite-usage-card {
+	background: linear-gradient(135deg, #ffffff 0%, var(--respira-background) 100%);
+}
+
+.respira-lite-usage-stats {
+	text-align: center;
+	margin-bottom: 24px;
+}
+
+.respira-lite-usage-number {
+	font-size: 48px;
+	font-weight: 700;
+	color: var(--respira-primary);
+	line-height: 1;
+	margin-bottom: 8px;
+}
+
+.respira-lite-count {
+	color: var(--respira-accent);
+}
+
+.respira-lite-separator {
+	color: var(--respira-text-light);
+	margin: 0 8px;
+}
+
+.respira-lite-limit {
+	color: var(--respira-text-light);
+}
+
+.respira-lite-usage-label {
+	font-size: 14px;
+	color: var(--respira-text-light);
+	margin: 0;
+}
+
+/* Progress Bar */
+.respira-lite-progress-bar {
+	width: 100%;
+	height: 12px;
+	background-color: #e9ecef;
+	border-radius: 6px;
+	overflow: hidden;
+	margin-bottom: 16px;
+	box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.respira-lite-progress-fill {
+	height: 100%;
+	transition: width 0.6s ease;
+	border-radius: 6px;
+}
+
+.respira-lite-progress-green {
+	background: linear-gradient(90deg, var(--respira-success) 0%, #34c6b8 100%);
+}
+
+.respira-lite-progress-orange {
+	background: linear-gradient(90deg, var(--respira-warning) 0%, #f6b984 100%);
+}
+
+.respira-lite-progress-red {
+	background: linear-gradient(90deg, var(--respira-error) 0%, #ef596f 100%);
+}
+
+.respira-lite-usage-meta {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 12px 16px;
+	background-color: rgba(255, 255, 255, 0.7);
+	border-radius: 6px;
+	font-size: 14px;
+}
+
+.respira-lite-usage-remaining strong,
+.respira-lite-usage-reset strong {
+	color: var(--respira-primary);
+}
+
+@media screen and (max-width: 782px) {
+	.respira-lite-usage-meta {
+		flex-direction: column;
+		gap: 8px;
+		text-align: center;
+	}
+}
+
+/* ==========================================================================
+   Quick Start Steps
+   ========================================================================== */
+.respira-lite-steps {
+	list-style: none;
+	counter-reset: step-counter;
+	padding: 0;
+	margin: 0;
+}
+
+.respira-lite-steps li {
+	counter-increment: step-counter;
+	position: relative;
+	padding-left: 48px;
+	margin-bottom: 24px;
+}
+
+.respira-lite-steps li::before {
+	content: counter(step-counter);
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 32px;
+	height: 32px;
+	background-color: var(--respira-accent);
+	color: #ffffff;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-weight: 700;
+	font-size: 16px;
+}
+
+.respira-lite-steps li strong {
+	display: block;
+	color: var(--respira-primary);
+	margin-bottom: 8px;
+	font-size: 16px;
+}
+
+.respira-lite-steps li p {
+	margin: 0 0 12px 0;
+	color: var(--respira-text-light);
+	line-height: 1.6;
+}
+
+.respira-lite-docs-link {
+	margin-top: 24px;
+	padding-top: 24px;
+	border-top: 1px solid var(--respira-border);
+}
+
+/* ==========================================================================
+   Upgrade Card
+   ========================================================================== */
+.respira-lite-upgrade-card {
+	background: linear-gradient(135deg, var(--respira-primary) 0%, var(--respira-accent) 100%);
+	color: #ffffff;
+	border: none;
+	box-shadow: 0 4px 12px rgba(29, 53, 87, 0.3);
+}
+
+.respira-lite-upgrade-card h2,
+.respira-lite-upgrade-card h3 {
+	color: #ffffff;
+	border-bottom-color: rgba(255, 255, 255, 0.2);
+}
+
+.respira-lite-upgrade-header {
+	text-align: center;
+	margin-bottom: 32px;
+}
+
+.respira-lite-upgrade-subtitle {
+	font-size: 16px;
+	opacity: 0.95;
+	margin-top: 8px;
+}
+
+.respira-lite-feature-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+	gap: 20px;
+	margin-bottom: 32px;
+}
+
+.respira-lite-feature {
+	display: flex;
+	gap: 12px;
+	padding: 16px;
+	background-color: rgba(255, 255, 255, 0.1);
+	border-radius: 6px;
+	transition: background-color 0.3s ease;
+}
+
+.respira-lite-feature:hover {
+	background-color: rgba(255, 255, 255, 0.15);
+}
+
+.respira-lite-feature .dashicons {
+	flex-shrink: 0;
+	width: 24px;
+	height: 24px;
+	font-size: 24px;
+	color: var(--respira-success);
+}
+
+.respira-lite-feature strong {
+	display: block;
+	margin-bottom: 4px;
+	font-size: 15px;
+}
+
+.respira-lite-feature p {
+	margin: 0;
+	font-size: 14px;
+	opacity: 0.9;
+	line-height: 1.5;
+}
+
+.respira-lite-upgrade-cta {
+	text-align: center;
+	padding-top: 24px;
+	border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.respira-lite-upgrade-cta .button-primary {
+	background-color: #ffffff;
+	color: var(--respira-primary);
+	border: none;
+	font-size: 18px;
+	font-weight: 600;
+	padding: 12px 32px;
+	height: auto;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+	transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.respira-lite-upgrade-cta .button-primary:hover,
+.respira-lite-upgrade-cta .button-primary:focus {
+	background-color: #ffffff;
+	color: var(--respira-primary);
+	transform: translateY(-2px);
+	box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+.respira-lite-money-back {
+	margin-top: 12px;
+	font-size: 13px;
+	opacity: 0.85;
+}
+
+/* ==========================================================================
+   API Keys
+   ========================================================================== */
+.respira-lite-key-display {
+	display: flex;
+	gap: 12px;
+	margin: 16px 0;
+	align-items: center;
+}
+
+.respira-lite-key-display input {
+	flex: 1;
+	font-family: monospace;
+	font-size: 14px;
+	padding: 10px 12px;
+}
+
+.respira-lite-key-display .button {
+	flex-shrink: 0;
+}
+
+.respira-lite-key-instructions {
+	margin-top: 16px;
+	padding: 16px;
+	background-color: var(--respira-background);
+	border-radius: 6px;
+}
+
+.respira-lite-key-instructions h3 {
+	margin-top: 0;
+}
+
+.respira-lite-key-instructions ol {
+	margin-bottom: 0;
+}
+
+.respira-lite-key-instructions code {
+	background-color: #ffffff;
+	padding: 2px 6px;
+	border-radius: 3px;
+	font-size: 13px;
+}
+
+#respira-lite-generated-key {
+	margin-top: 24px;
+	animation: slideDown 0.4s ease;
+}
+
+@keyframes slideDown {
+	from {
+		opacity: 0;
+		transform: translateY(-10px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+/* Code Block */
+.respira-lite-code-block {
+	background-color: #2d2d2d;
+	color: #f8f8f2;
+	padding: 16px;
+	border-radius: 6px;
+	overflow-x: auto;
+	margin: 12px 0;
+}
+
+.respira-lite-code-block code {
+	background: none;
+	color: inherit;
+	font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+	font-size: 13px;
+	line-height: 1.6;
+}
+
+/* ==========================================================================
+   Status Badges
+   ========================================================================== */
+.respira-lite-status-active {
+	display: inline-block;
+	padding: 4px 12px;
+	background-color: var(--respira-success);
+	color: #ffffff;
+	border-radius: 12px;
+	font-size: 12px;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+}
+
+.respira-lite-status-inactive {
+	display: inline-block;
+	padding: 4px 12px;
+	background-color: var(--respira-text-light);
+	color: #ffffff;
+	border-radius: 12px;
+	font-size: 12px;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+}
+
+/* Action Badges */
+.respira-lite-action-badge {
+	display: inline-block;
+	padding: 4px 10px;
+	border-radius: 4px;
+	font-size: 12px;
+	font-weight: 600;
+	text-transform: capitalize;
+}
+
+.respira-lite-action-get-context,
+.respira-lite-action-get-page,
+.respira-lite-action-get-post,
+.respira-lite-action-list-pages,
+.respira-lite-action-list-posts {
+	background-color: #e3f2fd;
+	color: #1976d2;
+}
+
+.respira-lite-action-update-page,
+.respira-lite-action-update-post {
+	background-color: #fff3e0;
+	color: #f57c00;
+}
+
+.respira-lite-action-error {
+	background-color: #ffebee;
+	color: #c62828;
+}
+
+/* ==========================================================================
+   Tables
+   ========================================================================== */
+.respira-lite-card .wp-list-table {
+	border: 1px solid var(--respira-border);
+	border-radius: 6px;
+	overflow: hidden;
+}
+
+.respira-lite-card .wp-list-table th {
+	background-color: var(--respira-background);
+	color: var(--respira-primary);
+	font-weight: 600;
+	padding: 12px;
+	border-bottom: 2px solid var(--respira-border);
+}
+
+.respira-lite-card .wp-list-table td {
+	padding: 12px;
+	vertical-align: middle;
+}
+
+.respira-lite-card .widefat {
+	border: 1px solid var(--respira-border);
+	border-radius: 6px;
+	overflow: hidden;
+}
+
+.respira-lite-card .widefat th {
+	background-color: var(--respira-background);
+	color: var(--respira-primary);
+	font-weight: 600;
+}
+
+.respira-lite-card .widefat code {
+	background-color: #f5f5f5;
+	padding: 2px 6px;
+	border-radius: 3px;
+	font-size: 13px;
+}
+
+/* ==========================================================================
+   Buttons
+   ========================================================================== */
+.respira-lite-card .button-primary {
+	background-color: var(--respira-primary);
+	border-color: var(--respira-primary);
+	text-shadow: none;
+	box-shadow: none;
+	transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.respira-lite-card .button-primary:hover,
+.respira-lite-card .button-primary:focus {
+	background-color: var(--respira-accent);
+	border-color: var(--respira-accent);
+	transform: translateY(-1px);
+}
+
+.respira-lite-card .button-secondary {
+	border-color: var(--respira-border);
+	transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.respira-lite-card .button-secondary:hover,
+.respira-lite-card .button-secondary:focus {
+	border-color: var(--respira-accent);
+	color: var(--respira-accent);
+}
+
+.respira-lite-revoke-key {
+	color: var(--respira-error);
+	border-color: var(--respira-error);
+}
+
+.respira-lite-revoke-key:hover,
+.respira-lite-revoke-key:focus {
+	background-color: var(--respira-error);
+	border-color: var(--respira-error);
+	color: #ffffff;
+}
+
+/* Button with dashicon */
+.respira-lite-card .button .dashicons {
+	margin-top: 4px;
+	margin-right: 4px;
+}
+
+/* ==========================================================================
+   Forms
+   ========================================================================== */
+.respira-lite-card .form-table th {
+	color: var(--respira-primary);
+	font-weight: 600;
+	padding: 20px 0;
+}
+
+.respira-lite-card .form-table td {
+	padding: 20px 0;
+}
+
+.respira-lite-card .form-table input[type="text"],
+.respira-lite-card .form-table input[type="email"],
+.respira-lite-card .form-table input[type="url"],
+.respira-lite-card .form-table textarea {
+	border-color: var(--respira-border);
+	border-radius: 4px;
+	transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.respira-lite-card .form-table input[type="text"]:focus,
+.respira-lite-card .form-table input[type="email"]:focus,
+.respira-lite-card .form-table input[type="url"]:focus,
+.respira-lite-card .form-table textarea:focus {
+	border-color: var(--respira-accent);
+	box-shadow: 0 0 0 1px var(--respira-accent);
+}
+
+.respira-lite-card .form-table input[type="checkbox"] {
+	margin-top: 2px;
+}
+
+/* ==========================================================================
+   Pro Settings
+   ========================================================================== */
+.respira-lite-pro-settings-card {
+	background: linear-gradient(135deg, #ffffff 0%, var(--respira-background) 100%);
+	border-left: 4px solid var(--respira-accent);
+}
+
+.respira-lite-pro-settings-list,
+.respira-lite-pro-features-grid {
+	display: grid;
+	gap: 16px;
+}
+
+.respira-lite-pro-setting-item,
+.respira-lite-pro-feature {
+	display: flex;
+	gap: 12px;
+	padding: 16px;
+	background-color: #ffffff;
+	border: 1px solid var(--respira-border);
+	border-radius: 6px;
+	transition: border-color 0.3s ease;
+}
+
+.respira-lite-pro-setting-item:hover,
+.respira-lite-pro-feature:hover {
+	border-color: var(--respira-accent);
+}
+
+.respira-lite-pro-setting-item .dashicons,
+.respira-lite-pro-feature .dashicons {
+	flex-shrink: 0;
+	width: 24px;
+	height: 24px;
+	font-size: 24px;
+	color: var(--respira-text-light);
+}
+
+.respira-lite-pro-setting-item strong,
+.respira-lite-pro-feature strong {
+	display: block;
+	margin-bottom: 4px;
+	color: var(--respira-primary);
+	font-size: 15px;
+}
+
+.respira-lite-pro-setting-item p,
+.respira-lite-pro-feature p {
+	margin: 0;
+	color: var(--respira-text-light);
+	font-size: 14px;
+	line-height: 1.5;
+}
+
+/* ==========================================================================
+   Audit Log Filters
+   ========================================================================== */
+.respira-lite-filters {
+	background-color: var(--respira-background);
+}
+
+.respira-lite-filter-group {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 12px;
+	align-items: center;
+}
+
+.respira-lite-filter-group label {
+	font-weight: 600;
+	color: var(--respira-primary);
+	margin-right: 8px;
+}
+
+.respira-lite-filter-group select {
+	min-width: 180px;
+	border-color: var(--respira-border);
+	border-radius: 4px;
+}
+
+@media screen and (max-width: 782px) {
+	.respira-lite-filter-group {
+		flex-direction: column;
+		align-items: stretch;
+	}
+
+	.respira-lite-filter-group label {
+		margin-right: 0;
+		margin-bottom: 4px;
+	}
+
+	.respira-lite-filter-group select,
+	.respira-lite-filter-group .button {
+		width: 100%;
+	}
+}
+
+/* Metadata Details */
+.respira-lite-metadata {
+	margin: 8px 0 0 0;
+	padding: 12px;
+	background-color: #f5f5f5;
+	border: 1px solid var(--respira-border);
+	border-radius: 4px;
+	font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+	font-size: 12px;
+	line-height: 1.6;
+	overflow-x: auto;
+	max-height: 300px;
+}
+
+details summary {
+	cursor: pointer;
+	color: var(--respira-accent);
+	font-weight: 600;
+	user-select: none;
+	transition: color 0.2s ease;
+}
+
+details summary:hover {
+	color: var(--respira-primary);
+}
+
+/* ==========================================================================
+   Notices & Alerts
+   ========================================================================== */
+.respira-lite-card .notice {
+	margin: 16px 0;
+	padding: 12px;
+	border-left-width: 4px;
+	animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+		transform: translateY(-5px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+.respira-lite-alert-success {
+	background-color: #d4edda;
+	border-left: 4px solid var(--respira-success);
+	color: #155724;
+	padding: 12px 16px;
+	border-radius: 4px;
+	margin: 16px 0;
+}
+
+.respira-lite-alert-error {
+	background-color: #f8d7da;
+	border-left: 4px solid var(--respira-error);
+	color: #721c24;
+	padding: 12px 16px;
+	border-radius: 4px;
+	margin: 16px 0;
+}
+
+.respira-lite-alert-warning {
+	background-color: #fff3cd;
+	border-left: 4px solid var(--respira-warning);
+	color: #856404;
+	padding: 12px 16px;
+	border-radius: 4px;
+	margin: 16px 0;
+}
+
+/* ==========================================================================
+   Loading States
+   ========================================================================== */
+.respira-lite-loading {
+	position: relative;
+	pointer-events: none;
+	opacity: 0.6;
+}
+
+.respira-lite-loading::after {
+	content: "";
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin: -12px 0 0 -12px;
+	width: 24px;
+	height: 24px;
+	border: 3px solid var(--respira-border);
+	border-top-color: var(--respira-accent);
+	border-radius: 50%;
+	animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+/* ==========================================================================
+   Pagination
+   ========================================================================== */
+.respira-lite-card .tablenav {
+	padding: 16px 0 0 0;
+}
+
+.respira-lite-card .tablenav-pages {
+	margin: 0;
+}
+
+.respira-lite-card .pagination-links .page-numbers {
+	padding: 6px 12px;
+	margin: 0 2px;
+	border: 1px solid var(--respira-border);
+	border-radius: 4px;
+	background-color: #ffffff;
+	color: var(--respira-primary);
+	text-decoration: none;
+	transition: all 0.2s ease;
+}
+
+.respira-lite-card .pagination-links .page-numbers:hover {
+	background-color: var(--respira-accent);
+	border-color: var(--respira-accent);
+	color: #ffffff;
+}
+
+.respira-lite-card .pagination-links .page-numbers.current {
+	background-color: var(--respira-primary);
+	border-color: var(--respira-primary);
+	color: #ffffff;
+}
+
+/* ==========================================================================
+   Responsive Design
+   ========================================================================== */
+@media screen and (max-width: 782px) {
+	.respira-lite-dashboard,
+	.respira-lite-api-keys,
+	.respira-lite-settings,
+	.respira-lite-audit-log {
+		margin: 10px 10px 10px 0;
+	}
+
+	.respira-lite-card {
+		padding: 16px;
+	}
+
+	.respira-lite-usage-number {
+		font-size: 36px;
+	}
+
+	.respira-lite-feature-grid,
+	.respira-lite-pro-features-grid {
+		grid-template-columns: 1fr;
+	}
+
+	.respira-lite-card .wp-list-table {
+		font-size: 13px;
+	}
+
+	.respira-lite-card .wp-list-table th,
+	.respira-lite-card .wp-list-table td {
+		padding: 8px;
+	}
+}
+
+/* ==========================================================================
+   Accessibility
+   ========================================================================== */
+.respira-lite-card a:focus,
+.respira-lite-card button:focus,
+.respira-lite-card input:focus,
+.respira-lite-card select:focus,
+.respira-lite-card textarea:focus {
+	outline: 2px solid var(--respira-accent);
+	outline-offset: 2px;
+}
+
+/* Skip focus outline for mouse users */
+.respira-lite-card a:focus:not(:focus-visible),
+.respira-lite-card button:focus:not(:focus-visible) {
+	outline: none;
+}
+
+/* Screen reader only content */
+.respira-lite-sr-only {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	white-space: nowrap;
+	border: 0;
+}
+
+/* ==========================================================================
+   Print Styles
+   ========================================================================== */
+@media print {
+	.respira-lite-card {
+		box-shadow: none;
+		border: 1px solid #cccccc;
+		page-break-inside: avoid;
+	}
+
+	.respira-lite-upgrade-card,
+	.respira-lite-upgrade-cta,
+	.button,
+	.notice {
+		display: none;
+	}
+}
