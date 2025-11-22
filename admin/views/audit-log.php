@@ -41,6 +41,9 @@ global $wpdb;
 $table_name     = $wpdb->prefix . 'respira_lite_audit_log';
 $object_types   = $wpdb->get_col( "SELECT DISTINCT object_type FROM {$table_name} ORDER BY object_type" );
 $action_types   = $wpdb->get_col( "SELECT DISTINCT action FROM {$table_name} ORDER BY action" );
+
+// Include header.
+require_once RESPIRA_LITE_PLUGIN_DIR . 'admin/views/header.php';
 ?>
 
 <div class="wrap respira-lite-audit-log">
@@ -56,7 +59,7 @@ $action_types   = $wpdb->get_col( "SELECT DISTINCT action FROM {$table_name} ORD
 			<?php
 			printf(
 				/* translators: %d: Retention days */
-				esc_html__( 'Audit logs are retained for %d days. Upgrade to Pro for 90-day retention and advanced filtering.', 'respira-for-wordpress-lite' ),
+				esc_html__( 'Audit logs are retained for %d days. Upgrade to the full version for 90-day retention and advanced filtering.', 'respira-for-wordpress-lite' ),
 				RESPIRA_LITE_AUDIT_RETENTION_DAYS
 			);
 			?>
@@ -262,9 +265,9 @@ $action_types   = $wpdb->get_col( "SELECT DISTINCT action FROM {$table_name} ORD
 		<?php endif; ?>
 	</div>
 
-	<!-- Pro Features -->
+	<!-- Full Version Features -->
 	<div class="respira-lite-card respira-lite-pro-features-card">
-		<h2><?php esc_html_e( 'Pro Audit Log Features', 'respira-for-wordpress-lite' ); ?></h2>
+		<h2><?php esc_html_e( 'Full Version Audit Log Features', 'respira-for-wordpress-lite' ); ?></h2>
 
 		<div class="respira-lite-pro-features-grid">
 			<div class="respira-lite-pro-feature">
@@ -317,9 +320,14 @@ $action_types   = $wpdb->get_col( "SELECT DISTINCT action FROM {$table_name} ORD
 		</div>
 
 		<div class="respira-lite-upgrade-cta">
-			<a href="<?php echo esc_url( $upgrade_url ); ?>" class="button button-primary button-hero" target="_blank">
-				<?php esc_html_e( 'Upgrade to Pro', 'respira-for-wordpress-lite' ); ?>
+			<a href="<?php echo esc_url( $upgrade_url ); ?>" class="button button-primary button-hero respira-lite-upgrade-button" target="_blank">
+				<?php esc_html_e( 'Upgrade to Full Version', 'respira-for-wordpress-lite' ); ?>
 			</a>
 		</div>
 	</div>
 </div>
+
+<?php
+// Include footer.
+require_once RESPIRA_LITE_PLUGIN_DIR . 'admin/views/footer.php';
+?>

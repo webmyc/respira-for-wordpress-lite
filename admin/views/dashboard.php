@@ -29,6 +29,9 @@ if ( $usage_percentage >= 90 ) {
 
 // Format reset date.
 $reset_date_formatted = gmdate( 'F j, Y', $usage['reset_timestamp'] );
+
+// Include header.
+require_once RESPIRA_LITE_PLUGIN_DIR . 'admin/views/header.php';
 ?>
 
 <div class="wrap respira-lite-dashboard">
@@ -76,7 +79,7 @@ $reset_date_formatted = gmdate( 'F j, Y', $usage['reset_timestamp'] );
 				<div class="notice notice-warning inline">
 					<p>
 						<strong><?php esc_html_e( 'Monthly limit reached!', 'respira-for-wordpress-lite' ); ?></strong>
-						<?php esc_html_e( 'Upgrade to Pro for unlimited edits.', 'respira-for-wordpress-lite' ); ?>
+						<?php esc_html_e( 'Upgrade to the full version for unlimited edits.', 'respira-for-wordpress-lite' ); ?>
 					</p>
 				</div>
 			<?php endif; ?>
@@ -119,7 +122,7 @@ $reset_date_formatted = gmdate( 'F j, Y', $usage['reset_timestamp'] );
 			<div class="respira-lite-upgrade-header">
 				<h2><?php esc_html_e( 'Unlock the Full Power of Respira', 'respira-for-wordpress-lite' ); ?></h2>
 				<p class="respira-lite-upgrade-subtitle">
-					<?php esc_html_e( 'Upgrade to Pro and supercharge your WordPress workflow', 'respira-for-wordpress-lite' ); ?>
+					<?php esc_html_e( 'Upgrade to the full version and supercharge your WordPress workflow', 'respira-for-wordpress-lite' ); ?>
 				</p>
 			</div>
 
@@ -177,7 +180,7 @@ $reset_date_formatted = gmdate( 'F j, Y', $usage['reset_timestamp'] );
 
 			<div class="respira-lite-upgrade-cta">
 				<a href="<?php echo esc_url( $upgrade_url ); ?>" class="button button-primary button-hero" target="_blank">
-					<?php esc_html_e( 'Upgrade to Pro Now', 'respira-for-wordpress-lite' ); ?>
+					<?php esc_html_e( 'Upgrade to Full Version Now', 'respira-for-wordpress-lite' ); ?>
 				</a>
 				<p class="respira-lite-money-back">
 					<?php esc_html_e( '30-day money-back guarantee', 'respira-for-wordpress-lite' ); ?>
@@ -212,3 +215,8 @@ $reset_date_formatted = gmdate( 'F j, Y', $usage['reset_timestamp'] );
 		</table>
 	</div>
 </div>
+
+<?php
+// Include footer.
+require_once RESPIRA_LITE_PLUGIN_DIR . 'admin/views/footer.php';
+?>

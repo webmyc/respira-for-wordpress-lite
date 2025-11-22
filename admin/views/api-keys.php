@@ -14,6 +14,9 @@ if ( ! defined( 'WPINC' ) ) {
 
 // Get existing API keys.
 $api_keys = Respira_Lite_Auth::list_api_keys( get_current_user_id() );
+
+// Include header.
+require_once RESPIRA_LITE_PLUGIN_DIR . 'admin/views/header.php';
 ?>
 
 <div class="wrap respira-lite-api-keys">
@@ -186,7 +189,22 @@ $api_keys = Respira_Lite_Auth::list_api_keys( get_current_user_id() );
 
 	<!-- Usage Instructions -->
 	<div class="respira-lite-card">
-		<h2><?php esc_html_e( 'Using Your API Key', 'respira-for-wordpress-lite' ); ?></h2>
+		<h2><?php esc_html_e( 'Using Your API Key & MCP Server', 'respira-for-wordpress-lite' ); ?></h2>
+
+		<h3><?php esc_html_e( 'For MCP (Model Context Protocol)', 'respira-for-wordpress-lite' ); ?></h3>
+		<p><?php esc_html_e( 'Use Respira as an MCP server to give your AI assistant direct access to your WordPress content. Add this to your MCP configuration:', 'respira-for-wordpress-lite' ); ?></p>
+		<pre class="respira-lite-code-block"><code>{
+  "mcpServers": {
+    "respira": {
+      "command": "node",
+      "args": ["path/to/respira-mcp-server"],
+      "env": {
+        "RESPIRA_API_KEY": "YOUR_API_KEY_HERE",
+        "RESPIRA_ENDPOINT": "<?php echo esc_url( rest_url( RESPIRA_LITE_REST_NAMESPACE ) ); ?>"
+      }
+    }
+  }
+}</code></pre>
 
 		<h3><?php esc_html_e( 'For Cursor IDE', 'respira-for-wordpress-lite' ); ?></h3>
 		<p><?php esc_html_e( 'Add this configuration to your Cursor settings:', 'respira-for-wordpress-lite' ); ?></p>
@@ -257,3 +275,8 @@ $api_keys = Respira_Lite_Auth::list_api_keys( get_current_user_id() );
 		</table>
 	</div>
 </div>
+
+<?php
+// Include footer.
+require_once RESPIRA_LITE_PLUGIN_DIR . 'admin/views/footer.php';
+?>

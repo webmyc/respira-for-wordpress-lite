@@ -15,6 +15,9 @@ if ( ! defined( 'WPINC' ) ) {
 // Get current settings.
 $security_validation = get_option( 'respira_lite_security_validation', true );
 $upgrade_url         = Respira_Lite_Usage_Limiter::get_upgrade_url( 'settings', 'upgrade_cta' );
+
+// Include header.
+require_once RESPIRA_LITE_PLUGIN_DIR . 'admin/views/header.php';
 ?>
 
 <div class="wrap respira-lite-settings">
@@ -60,11 +63,11 @@ $upgrade_url         = Respira_Lite_Usage_Limiter::get_upgrade_url( 'settings', 
 		</div>
 	</form>
 
-	<!-- Pro Features Notice -->
+	<!-- Full Version Features Notice -->
 	<div class="respira-lite-card respira-lite-pro-settings-card">
-		<h2><?php esc_html_e( 'Pro Settings', 'respira-for-wordpress-lite' ); ?></h2>
+		<h2><?php esc_html_e( 'Full Version Settings', 'respira-for-wordpress-lite' ); ?></h2>
 		<p class="description">
-			<?php esc_html_e( 'Unlock advanced settings with Respira Pro:', 'respira-for-wordpress-lite' ); ?>
+			<?php esc_html_e( 'Unlock advanced settings with the full version of Respira:', 'respira-for-wordpress-lite' ); ?>
 		</p>
 
 		<div class="respira-lite-pro-settings-list">
@@ -134,8 +137,8 @@ $upgrade_url         = Respira_Lite_Usage_Limiter::get_upgrade_url( 'settings', 
 		</div>
 
 		<div class="respira-lite-upgrade-cta">
-			<a href="<?php echo esc_url( $upgrade_url ); ?>" class="button button-primary button-hero" target="_blank">
-				<?php esc_html_e( 'Upgrade to Pro', 'respira-for-wordpress-lite' ); ?>
+			<a href="<?php echo esc_url( $upgrade_url ); ?>" class="button button-primary button-hero respira-lite-upgrade-button" target="_blank">
+				<?php esc_html_e( 'Upgrade to Full Version', 'respira-for-wordpress-lite' ); ?>
 			</a>
 		</div>
 	</div>
@@ -176,3 +179,8 @@ $upgrade_url         = Respira_Lite_Usage_Limiter::get_upgrade_url( 'settings', 
 		</table>
 	</div>
 </div>
+
+<?php
+// Include footer.
+require_once RESPIRA_LITE_PLUGIN_DIR . 'admin/views/footer.php';
+?>

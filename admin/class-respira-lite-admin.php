@@ -144,8 +144,8 @@ class Respira_Lite_Admin {
 		// Add API Keys submenu.
 		add_submenu_page(
 			'respira-lite',
-			__( 'API Keys', 'respira-for-wordpress-lite' ),
-			__( 'API Keys', 'respira-for-wordpress-lite' ),
+			__( 'API Key & MCP', 'respira-for-wordpress-lite' ),
+			__( 'API Key & MCP', 'respira-for-wordpress-lite' ),
 			'manage_options',
 			'respira-lite-api-keys',
 			array( $this, 'display_api_keys_page' )
@@ -242,7 +242,7 @@ class Respira_Lite_Admin {
 				);
 				?>
 				<a href="<?php echo esc_url( $upgrade_url ); ?>" target="_blank">
-					<?php esc_html_e( 'Upgrade to Pro for unlimited edits, all page builders, and advanced features.', 'respira-for-wordpress-lite' ); ?>
+					<?php esc_html_e( 'Upgrade to the full version for unlimited edits, all page builders, and advanced features.', 'respira-for-wordpress-lite' ); ?>
 				</a>
 			</p>
 		</div>
