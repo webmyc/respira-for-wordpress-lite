@@ -713,9 +713,16 @@ class Respira_Lite_API {
 	 * @return WP_REST_Response|WP_Error Response object or error.
 	 */
 	public function update_page( $request ) {
-		// Check usage limit first.
-		if ( Respira_Lite_Usage_Limiter::is_limit_reached() ) {
-			return Respira_Lite_Usage_Limiter::get_limit_reached_error();
+		// Feature detection: Check if operation is supported (wp-ai-client pattern).
+		$operation_check = Respira_Lite_Feature_Detector::is_operation_supported( 'update_page' );
+		if ( is_wp_error( $operation_check ) ) {
+			return $operation_check;
+		}
+
+		// Feature detection: Check if usage is available (wp-ai-client pattern).
+		$usage_check = Respira_Lite_Feature_Detector::is_usage_available();
+		if ( is_wp_error( $usage_check ) ) {
+			return $usage_check;
 		}
 
 		$page_id = $request->get_param( 'id' );
@@ -934,9 +941,16 @@ class Respira_Lite_API {
 	 * @return WP_REST_Response|WP_Error Response object or error.
 	 */
 	public function update_post( $request ) {
-		// Check usage limit first.
-		if ( Respira_Lite_Usage_Limiter::is_limit_reached() ) {
-			return Respira_Lite_Usage_Limiter::get_limit_reached_error();
+		// Feature detection: Check if operation is supported (wp-ai-client pattern).
+		$operation_check = Respira_Lite_Feature_Detector::is_operation_supported( 'update_post' );
+		if ( is_wp_error( $operation_check ) ) {
+			return $operation_check;
+		}
+
+		// Feature detection: Check if usage is available (wp-ai-client pattern).
+		$usage_check = Respira_Lite_Feature_Detector::is_usage_available();
+		if ( is_wp_error( $usage_check ) ) {
+			return $usage_check;
 		}
 
 		$post_id = $request->get_param( 'id' );
@@ -1356,16 +1370,8 @@ class Respira_Lite_API {
 	 * @return WP_Error Error with upgrade message.
 	 */
 	public function analyze_seo( $request ) {
-		$upgrade_url = Respira_Lite_Usage_Limiter::get_upgrade_url( 'api', 'feature_upgrade' );
-
-		return new WP_Error(
-			'respira_lite_pro_feature',
-			sprintf(
-				/* translators: %s: Upgrade URL */
-				__( 'Respira Lite says: SEO analysis is a Pro feature. Upgrade to access advanced SEO insights, recommendations, and scoring: %s', 'respira-for-wordpress-lite' ),
-				$upgrade_url
-			),
-			array(
+		// Feature detection: Check if analysis is supported (wp-ai-client pattern).
+		return Respira_Lite_Feature_Detector::is_analysis_supported( 'seo' );
 				'status'      => 403,
 				'upgrade_url' => $upgrade_url,
 				'feature'     => 'seo_analysis',
@@ -1381,16 +1387,8 @@ class Respira_Lite_API {
 	 * @return WP_Error Error with upgrade message.
 	 */
 	public function analyze_performance( $request ) {
-		$upgrade_url = Respira_Lite_Usage_Limiter::get_upgrade_url( 'api', 'feature_upgrade' );
-
-		return new WP_Error(
-			'respira_lite_pro_feature',
-			sprintf(
-				/* translators: %s: Upgrade URL */
-				__( 'Respira Lite says: Performance analysis is a Pro feature. Upgrade to access page speed insights, optimization recommendations, and Core Web Vitals tracking: %s', 'respira-for-wordpress-lite' ),
-				$upgrade_url
-			),
-			array(
+		// Feature detection: Check if analysis is supported (wp-ai-client pattern).
+		return Respira_Lite_Feature_Detector::is_analysis_supported( 'performance' );
 				'status'      => 403,
 				'upgrade_url' => $upgrade_url,
 				'feature'     => 'performance_analysis',
@@ -1406,16 +1404,8 @@ class Respira_Lite_API {
 	 * @return WP_Error Error with upgrade message.
 	 */
 	public function analyze_aeo( $request ) {
-		$upgrade_url = Respira_Lite_Usage_Limiter::get_upgrade_url( 'api', 'feature_upgrade' );
-
-		return new WP_Error(
-			'respira_lite_pro_feature',
-			sprintf(
-				/* translators: %s: Upgrade URL */
-				__( 'Respira Lite says: AEO (Answer Engine Optimization) analysis is a Pro feature. Upgrade to optimize your content for AI-powered search engines: %s', 'respira-for-wordpress-lite' ),
-				$upgrade_url
-			),
-			array(
+		// Feature detection: Check if analysis is supported (wp-ai-client pattern).
+		return Respira_Lite_Feature_Detector::is_analysis_supported( 'aeo' );
 				'status'      => 403,
 				'upgrade_url' => $upgrade_url,
 				'feature'     => 'aeo_analysis',

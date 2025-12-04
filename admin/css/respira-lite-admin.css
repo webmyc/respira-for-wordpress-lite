@@ -18,7 +18,7 @@
 	--respira-background: #F1FAEE;
 	--respira-border: #E0E0E0;
 	--respira-text: #333333;
-	--respira-text-light: #666666;
+	--respira-text-light: #4a4a4a; /* Improved contrast: changed from #666666 to #4a4a4a for WCAG AA compliance */
 	--respira-shadow: rgba(29, 53, 87, 0.1);
 	--respira-shadow-hover: rgba(29, 53, 87, 0.15);
 }
@@ -213,7 +213,7 @@
 }
 
 .respira-lite-card .description {
-	color: var(--respira-text-light);
+	color: var(--respira-text); /* Improved contrast: changed from text-light to text for better readability */
 	font-size: 14px;
 	line-height: 1.6;
 }
@@ -392,7 +392,8 @@
 
 .respira-lite-upgrade-subtitle {
 	font-size: 16px;
-	opacity: 0.95;
+	opacity: 1; /* Improved contrast: removed opacity for better readability */
+	color: rgba(255, 255, 255, 0.95); /* Explicit color with better contrast */
 	margin-top: 8px;
 }
 
@@ -433,7 +434,8 @@
 .respira-lite-feature p {
 	margin: 0;
 	font-size: 14px;
-	opacity: 0.9;
+	opacity: 1; /* Improved contrast: removed opacity for better readability */
+	color: rgba(255, 255, 255, 0.95); /* Explicit color with better contrast */
 	line-height: 1.5;
 }
 
@@ -921,7 +923,7 @@
 .respira-lite-pro-setting-item p,
 .respira-lite-pro-feature p {
 	margin: 0;
-	color: var(--respira-text);
+	color: var(--respira-text); /* Already good contrast, keeping as is */
 	font-size: 14px;
 	line-height: 1.5;
 }

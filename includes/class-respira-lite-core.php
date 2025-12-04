@@ -112,6 +112,11 @@ class Respira_Lite_Core {
 		require_once RESPIRA_LITE_PLUGIN_DIR . 'includes/class-respira-lite-audit.php';
 
 		/**
+		 * The class responsible for feature detection (inspired by wp-ai-client patterns).
+		 */
+		require_once RESPIRA_LITE_PLUGIN_DIR . 'includes/class-respira-lite-feature-detector.php';
+
+		/**
 		 * The class responsible for defining all actions in the admin area.
 		 */
 		require_once RESPIRA_LITE_PLUGIN_DIR . 'admin/class-respira-lite-admin.php';
