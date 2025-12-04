@@ -3,7 +3,7 @@
  * Plugin Name: Respira for WordPress Lite
  * Plugin URI: https://respira.press
  * Description: Free version - Connect AI coding assistants like Cursor and Claude Code to edit your WordPress site with Gutenberg. Limited to 30 edits/month.
- * Version: 1.0.1
+ * Version: 1.0.2
  * Author: Respira
  * Author URI: https://respira.press
  * License: GPL v2 or later
@@ -27,7 +27,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Current plugin version.
  */
 if ( ! defined( 'RESPIRA_LITE_VERSION' ) ) {
-	define( 'RESPIRA_LITE_VERSION', '1.0.1' );
+	define( 'RESPIRA_LITE_VERSION', '1.0.2' );
 }
 
 /**
