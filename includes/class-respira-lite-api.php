@@ -408,6 +408,86 @@ class Respira_Lite_API {
 				'permission_callback' => array( $this, 'api_key_permission_check' ),
 			)
 		);
+
+		// Menu endpoints (read-only).
+		register_rest_route(
+			RESPIRA_LITE_REST_NAMESPACE,
+			'/menus',
+			array(
+				'methods'             => 'GET',
+				'callback'            => array( $this, 'get_menus' ),
+				'permission_callback' => array( $this, 'api_key_permission_check' ),
+			)
+		);
+
+		register_rest_route(
+			RESPIRA_LITE_REST_NAMESPACE,
+			'/menus/(?P<id>\d+)',
+			array(
+				'methods'             => 'GET',
+				'callback'            => array( $this, 'get_menu' ),
+				'permission_callback' => array( $this, 'api_key_permission_check' ),
+				'args'                => array(
+					'id' => array(
+						'required'          => true,
+						'validate_callback' => function( $param ) {
+							return is_numeric( $param );
+						},
+					),
+				),
+			)
+		);
+
+		register_rest_route(
+			RESPIRA_LITE_REST_NAMESPACE,
+			'/menus/locations',
+			array(
+				'methods'             => 'GET',
+				'callback'            => array( $this, 'get_menu_locations' ),
+				'permission_callback' => array( $this, 'api_key_permission_check' ),
+			)
+		);
+
+		// Taxonomy endpoints (read-only).
+		register_rest_route(
+			RESPIRA_LITE_REST_NAMESPACE,
+			'/taxonomies',
+			array(
+				'methods'             => 'GET',
+				'callback'            => array( $this, 'get_taxonomies' ),
+				'permission_callback' => array( $this, 'api_key_permission_check' ),
+			)
+		);
+
+		register_rest_route(
+			RESPIRA_LITE_REST_NAMESPACE,
+			'/taxonomies/(?P<taxonomy>[a-zA-Z0-9_-]+)/terms',
+			array(
+				'methods'             => 'GET',
+				'callback'            => array( $this, 'get_taxonomy_terms' ),
+				'permission_callback' => array( $this, 'api_key_permission_check' ),
+				'args'                => array(
+					'taxonomy' => array(
+						'required'          => true,
+						'sanitize_callback' => 'sanitize_key',
+					),
+					'per_page' => array(
+						'required'          => false,
+						'default'           => 100,
+						'sanitize_callback' => 'absint',
+					),
+					'page'     => array(
+						'required'          => false,
+						'default'           => 1,
+						'sanitize_callback' => 'absint',
+					),
+					'search'   => array(
+						'required'          => false,
+						'sanitize_callback' => 'sanitize_text_field',
+					),
+				),
+			)
+		);
 	}
 
 	/**
@@ -1605,6 +1685,233 @@ class Respira_Lite_API {
 				'url' => get_the_post_thumbnail_url( $post->ID, 'full' ),
 			) : null,
 			'meta'          => get_post_meta( $post->ID ),
+		);
+	}
+
+	/**
+	 * Get all menus (read-only).
+	 *
+	 * @since 1.0.2
+	 * @return WP_REST_Response Response object.
+	 */
+	public function get_menus() {
+		$menus = wp_get_nav_menus();
+
+		$data = array();
+		foreach ( $menus as $menu ) {
+			$data[] = array(
+				'id'          => $menu->term_id,
+				'name'        => $menu->name,
+				'slug'        => $menu->slug,
+				'description' => $menu->description,
+				'count'       => $menu->count,
+			);
+		}
+
+		return new WP_REST_Response(
+			array(
+				'success'     => true,
+				'message'     => __( 'Respira Lite says: Menus retrieved (read-only). Upgrade to edit menus.', 'respira-for-wordpress-lite' ),
+				'data'        => $data,
+				'notice'      => __( 'Menu editing requires the full version of Respira for WordPress.', 'respira-for-wordpress-lite' ),
+				'upgrade_url' => 'https://respira.press?utm_source=lite&utm_medium=api&utm_campaign=menu_upgrade',
+			),
+			200
+		);
+	}
+
+	/**
+	 * Get single menu with items (read-only).
+	 *
+	 * @since 1.0.2
+	 * @param WP_REST_Request $request The request object.
+	 * @return WP_REST_Response|WP_Error Response object or error.
+	 */
+	public function get_menu( $request ) {
+		$menu_id = (int) $request->get_param( 'id' );
+		$menu    = wp_get_nav_menu_object( $menu_id );
+
+		if ( ! $menu ) {
+			return new WP_Error(
+				'respira_lite_menu_not_found',
+				__( 'Respira Lite says: Menu not found.', 'respira-for-wordpress-lite' ),
+				array( 'status' => 404 )
+			);
+		}
+
+		$items      = wp_get_nav_menu_items( $menu_id );
+		$menu_items = array();
+
+		if ( $items ) {
+			foreach ( $items as $item ) {
+				$menu_items[] = array(
+					'id'          => $item->ID,
+					'title'       => $item->title,
+					'url'         => $item->url,
+					'target'      => $item->target,
+					'parent'      => (int) $item->menu_item_parent,
+					'position'    => (int) $item->menu_order,
+					'object_type' => $item->object,
+					'object_id'   => (int) $item->object_id,
+					'classes'     => implode( ' ', array_filter( $item->classes ) ),
+					'description' => $item->description,
+				);
+			}
+		}
+
+		return new WP_REST_Response(
+			array(
+				'success'     => true,
+				'message'     => __( 'Respira Lite says: Menu retrieved (read-only). Upgrade to edit menus.', 'respira-for-wordpress-lite' ),
+				'data'        => array(
+					'id'          => $menu->term_id,
+					'name'        => $menu->name,
+					'slug'        => $menu->slug,
+					'description' => $menu->description,
+					'items'       => $menu_items,
+				),
+				'notice'      => __( 'Menu editing requires the full version of Respira for WordPress.', 'respira-for-wordpress-lite' ),
+				'upgrade_url' => 'https://respira.press?utm_source=lite&utm_medium=api&utm_campaign=menu_upgrade',
+			),
+			200
+		);
+	}
+
+	/**
+	 * Get menu locations (read-only).
+	 *
+	 * @since 1.0.2
+	 * @return WP_REST_Response Response object.
+	 */
+	public function get_menu_locations() {
+		$locations = get_registered_nav_menus();
+		$assigned  = get_nav_menu_locations();
+
+		$data = array();
+		foreach ( $locations as $location => $description ) {
+			$menu_id = isset( $assigned[ $location ] ) ? $assigned[ $location ] : 0;
+			$menu    = $menu_id ? wp_get_nav_menu_object( $menu_id ) : null;
+
+			$data[] = array(
+				'location'    => $location,
+				'description' => $description,
+				'menu_id'     => $menu_id,
+				'menu_name'   => $menu ? $menu->name : null,
+			);
+		}
+
+		return new WP_REST_Response(
+			array(
+				'success'     => true,
+				'message'     => __( 'Respira Lite says: Menu locations retrieved (read-only). Upgrade to assign menus.', 'respira-for-wordpress-lite' ),
+				'data'        => $data,
+				'notice'      => __( 'Menu assignment requires the full version of Respira for WordPress.', 'respira-for-wordpress-lite' ),
+				'upgrade_url' => 'https://respira.press?utm_source=lite&utm_medium=api&utm_campaign=menu_upgrade',
+			),
+			200
+		);
+	}
+
+	/**
+	 * Get all public taxonomies (read-only).
+	 *
+	 * @since 1.0.2
+	 * @return WP_REST_Response Response object.
+	 */
+	public function get_taxonomies() {
+		$taxonomies = get_taxonomies( array( 'public' => true ), 'objects' );
+
+		$data = array();
+		foreach ( $taxonomies as $taxonomy ) {
+			$data[] = array(
+				'name'         => $taxonomy->name,
+				'label'        => $taxonomy->label,
+				'singular'     => $taxonomy->labels->singular_name,
+				'description'  => $taxonomy->description,
+				'hierarchical' => $taxonomy->hierarchical,
+				'post_types'   => $taxonomy->object_type,
+				'count'        => wp_count_terms( array( 'taxonomy' => $taxonomy->name, 'hide_empty' => false ) ),
+			);
+		}
+
+		return new WP_REST_Response(
+			array(
+				'success'     => true,
+				'message'     => __( 'Respira Lite says: Taxonomies retrieved (read-only). Upgrade to manage terms.', 'respira-for-wordpress-lite' ),
+				'data'        => $data,
+				'notice'      => __( 'Taxonomy management requires the full version of Respira for WordPress.', 'respira-for-wordpress-lite' ),
+				'upgrade_url' => 'https://respira.press?utm_source=lite&utm_medium=api&utm_campaign=taxonomy_upgrade',
+			),
+			200
+		);
+	}
+
+	/**
+	 * Get terms for a taxonomy (read-only).
+	 *
+	 * @since 1.0.2
+	 * @param WP_REST_Request $request The request object.
+	 * @return WP_REST_Response|WP_Error Response object or error.
+	 */
+	public function get_taxonomy_terms( $request ) {
+		$taxonomy = $request->get_param( 'taxonomy' );
+		$per_page = $request->get_param( 'per_page' );
+		$page     = $request->get_param( 'page' );
+		$search   = $request->get_param( 'search' );
+
+		if ( ! taxonomy_exists( $taxonomy ) ) {
+			return new WP_Error(
+				'respira_lite_taxonomy_not_found',
+				__( 'Respira Lite says: Taxonomy not found.', 'respira-for-wordpress-lite' ),
+				array( 'status' => 404 )
+			);
+		}
+
+		$args = array(
+			'taxonomy'   => $taxonomy,
+			'hide_empty' => false,
+			'number'     => $per_page,
+			'offset'     => ( $page - 1 ) * $per_page,
+		);
+
+		if ( ! empty( $search ) ) {
+			$args['search'] = $search;
+		}
+
+		$terms = get_terms( $args );
+		$total = wp_count_terms( array( 'taxonomy' => $taxonomy, 'hide_empty' => false ) );
+
+		if ( is_wp_error( $terms ) ) {
+			return $terms;
+		}
+
+		$data = array();
+		foreach ( $terms as $term ) {
+			$data[] = array(
+				'id'          => $term->term_id,
+				'name'        => $term->name,
+				'slug'        => $term->slug,
+				'description' => $term->description,
+				'parent'      => $term->parent,
+				'count'       => $term->count,
+			);
+		}
+
+		return new WP_REST_Response(
+			array(
+				'success'     => true,
+				'message'     => __( 'Respira Lite says: Terms retrieved (read-only). Upgrade to manage terms.', 'respira-for-wordpress-lite' ),
+				'data'        => $data,
+				'pagination'  => array(
+					'total'       => (int) $total,
+					'total_pages' => (int) ceil( (int) $total / $per_page ),
+					'current'     => $page,
+					'per_page'    => $per_page,
+				),
+				'notice'      => __( 'Term management requires the full version of Respira for WordPress.', 'respira-for-wordpress-lite' ),
+				'upgrade_url' => 'https://respira.press?utm_source=lite&utm_medium=api&utm_campaign=taxonomy_upgrade',
+			),
+			200
 		);
 	}
 }
