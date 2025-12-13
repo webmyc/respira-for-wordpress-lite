@@ -31,6 +31,9 @@
 			$('#respira-lite-copy-key').on('click', this.handleCopyKey.bind(this));
 			$('.respira-lite-revoke-key').on('click', this.handleRevokeKey.bind(this));
 
+			// Copy key prefix buttons
+			$('.respira-lite-copy-btn').on('click', this.handleCopyKeyPrefix.bind(this));
+
 			// Settings page events
 			$('#respira-lite-settings-form').on('submit', this.handleSaveSettings.bind(this));
 
@@ -176,6 +179,89 @@
 			setTimeout(() => {
 				$button.html(originalHtml);
 				$button.removeClass('button-primary');
+			}, 2000);
+		},
+
+		/**
+		 * Handle copy key prefix from data attribute
+		 *
+		 * @param {Event} e - Click event
+		 */
+		handleCopyKeyPrefix: function(e) {
+			e.preventDefault();
+
+			const $button = $(e.currentTarget);
+			const textToCopy = $button.data('copy');
+			const originalText = $button.text();
+
+			if (!textToCopy) {
+				return;
+			}
+
+			try {
+				// Try modern clipboard API first
+				if (navigator.clipboard && window.isSecureContext) {
+					navigator.clipboard.writeText(textToCopy)
+						.then(() => {
+							this.showCopyPrefixSuccess($button, originalText);
+						})
+						.catch(() => {
+							// Fallback to execCommand
+							this.fallbackCopyText(textToCopy, $button, originalText);
+						});
+				} else {
+					// Fallback to execCommand
+					this.fallbackCopyText(textToCopy, $button, originalText);
+				}
+			} catch (err) {
+				this.showMessage(respiraLiteAdmin.strings.copyFailed || 'Failed to copy', 'error');
+				this.logError('Copy Error:', err);
+			}
+		},
+
+		/**
+		 * Fallback copy method for text using a temporary input
+		 *
+		 * @param {string} text - Text to copy
+		 * @param {jQuery} $button - Button element
+		 * @param {string} originalText - Original button text
+		 */
+		fallbackCopyText: function(text, $button, originalText) {
+			const $tempInput = $('<input>')
+				.attr('type', 'text')
+				.val(text)
+				.css({
+					position: 'absolute',
+					left: '-9999px'
+				})
+				.appendTo('body');
+
+			$tempInput.select();
+			const success = document.execCommand('copy');
+			$tempInput.remove();
+
+			if (success) {
+				this.showCopyPrefixSuccess($button, originalText);
+			} else {
+				this.showMessage(respiraLiteAdmin.strings.copyFailed || 'Failed to copy', 'error');
+			}
+		},
+
+		/**
+		 * Show copy success feedback for key prefix buttons
+		 *
+		 * @param {jQuery} $button - Button element
+		 * @param {string} originalText - Original button text
+		 */
+		showCopyPrefixSuccess: function($button, originalText) {
+			const copiedText = respiraLiteAdmin.strings.copied || 'Copied!';
+			$button.text(copiedText);
+			$button.addClass('copied');
+
+			// Reset button after 2 seconds
+			setTimeout(() => {
+				$button.text(originalText);
+				$button.removeClass('copied');
 			}, 2000);
 		},
 

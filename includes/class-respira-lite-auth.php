@@ -67,6 +67,9 @@ class Respira_Lite_Auth {
 		// Generate UUID v4 format key.
 		$api_key = 'respira_lite_' . self::generate_uuid();
 
+		// Store key prefix for display (first 20 chars: "respira_lite_" + first 7 UUID chars).
+		$key_prefix = substr( $api_key, 0, 20 );
+
 		// Hash the key for storage.
 		$hashed_key = wp_hash_password( $api_key );
 
@@ -86,14 +89,15 @@ class Respira_Lite_Auth {
 		$result = $wpdb->insert(
 			$table_name,
 			array(
-				'api_key'    => $hashed_key,
-				'user_id'    => $user_id,
-				'name'       => $name ? $name : __( 'Default Key', 'respira-for-wordpress-lite' ),
+				'api_key'     => $hashed_key,
+				'key_prefix'  => $key_prefix,
+				'user_id'     => $user_id,
+				'name'        => $name ? $name : __( 'Default Key', 'respira-for-wordpress-lite' ),
 				'permissions' => wp_json_encode( $permissions ),
-				'created_at' => current_time( 'mysql' ),
-				'is_active'  => 1,
+				'created_at'  => current_time( 'mysql' ),
+				'is_active'   => 1,
 			),
-			array( '%s', '%d', '%s', '%s', '%s', '%d' )
+			array( '%s', '%s', '%d', '%s', '%s', '%s', '%d' )
 		);
 
 		if ( false === $result ) {
@@ -229,7 +233,7 @@ class Respira_Lite_Auth {
 
 		$keys = $wpdb->get_results(
 			$wpdb->prepare(
-				"SELECT id, user_id, name, last_used, created_at, is_active FROM {$table_name} WHERE user_id = %d ORDER BY created_at DESC",
+				"SELECT id, user_id, name, key_prefix, last_used, created_at, is_active FROM {$table_name} WHERE user_id = %d ORDER BY created_at DESC",
 				$user_id
 			)
 		);

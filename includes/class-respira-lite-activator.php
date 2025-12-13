@@ -56,6 +56,7 @@ class Respira_Lite_Activator {
 		$sql        = "CREATE TABLE IF NOT EXISTS $table_name (
 			id bigint(20) NOT NULL AUTO_INCREMENT,
 			api_key varchar(255) NOT NULL,
+			key_prefix varchar(32) DEFAULT NULL,
 			user_id bigint(20) NOT NULL,
 			name varchar(255) DEFAULT NULL,
 			permissions text DEFAULT NULL,

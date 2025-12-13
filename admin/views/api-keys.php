@@ -98,6 +98,9 @@ require_once RESPIRA_LITE_PLUGIN_DIR . 'admin/views/header.php';
 						<th scope="col" class="column-name">
 							<?php esc_html_e( 'Key Name', 'respira-for-wordpress-lite' ); ?>
 						</th>
+						<th scope="col" class="column-prefix">
+							<?php esc_html_e( 'Key Prefix', 'respira-for-wordpress-lite' ); ?>
+						</th>
 						<th scope="col" class="column-created">
 							<?php esc_html_e( 'Created', 'respira-for-wordpress-lite' ); ?>
 						</th>
@@ -117,6 +120,16 @@ require_once RESPIRA_LITE_PLUGIN_DIR . 'admin/views/header.php';
 						<tr data-key-id="<?php echo esc_attr( $key->id ); ?>">
 							<td class="column-name">
 								<strong><?php echo esc_html( $key->name ); ?></strong>
+							</td>
+							<td class="column-prefix">
+								<?php if ( ! empty( $key->key_prefix ) ) : ?>
+									<code class="respira-lite-key-prefix"><?php echo esc_html( $key->key_prefix ); ?>...</code>
+									<button type="button" class="button button-small respira-lite-copy-btn" data-copy="<?php echo esc_attr( $key->key_prefix ); ?>...">
+										<?php esc_html_e( 'Copy', 'respira-for-wordpress-lite' ); ?>
+									</button>
+								<?php else : ?>
+									<span class="respira-lite-legacy-key"><?php esc_html_e( 'Legacy key', 'respira-for-wordpress-lite' ); ?></span>
+								<?php endif; ?>
 							</td>
 							<td class="column-created">
 								<?php
@@ -164,6 +177,9 @@ require_once RESPIRA_LITE_PLUGIN_DIR . 'admin/views/header.php';
 					<?php endforeach; ?>
 				</tbody>
 			</table>
+			<p class="description" style="margin-top: 12px;">
+				<?php esc_html_e( 'Note: For security, full API keys are only shown once when generated. The prefix helps you identify which key is which.', 'respira-for-wordpress-lite' ); ?>
+			</p>
 		<?php endif; ?>
 	</div>
 
