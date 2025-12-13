@@ -52,10 +52,15 @@ class Respira_Lite_Auth {
 				'respira_lite_max_keys_reached',
 				sprintf(
 					/* translators: %d: Maximum number of API keys allowed */
-					__( 'Maximum API key limit reached (%d keys). Delete an existing key to create a new one.', 'respira-for-wordpress-lite' ),
+					__( 'Respira Lite says: Maximum API key limit reached (%d keys). Delete an existing key to create a new one, or upgrade to the full version for unlimited keys.', 'respira-for-wordpress-lite' ),
 					RESPIRA_LITE_MAX_API_KEYS
 				),
-				array( 'status' => 403 )
+				array(
+					'status'      => 403,
+					'current'     => (int) $existing_count,
+					'limit'       => RESPIRA_LITE_MAX_API_KEYS,
+					'upgrade_url' => 'https://respira.press?utm_source=lite&utm_medium=api&utm_campaign=api_key_limit',
+				)
 			);
 		}
 

@@ -81,7 +81,7 @@ class Respira_Lite_API {
 			array(
 				'methods'             => 'GET',
 				'callback'            => array( $this, 'get_usage' ),
-				'permission_callback' => array( $this, 'check_api_key' ),
+				'permission_callback' => array( $this, 'api_key_permission_check' ),
 			)
 		);
 
@@ -564,8 +564,15 @@ class Respira_Lite_API {
 	 * @return WP_REST_Response Response object with usage statistics.
 	 */
 	public function get_usage() {
+		$usage = Respira_Lite_Usage_Limiter::get_usage();
+
 		return new WP_REST_Response(
-			Respira_Lite_Usage_Limiter::get_usage(),
+			array(
+				'success'     => true,
+				'message'     => __( 'Respira Lite says: Usage statistics retrieved.', 'respira-for-wordpress-lite' ),
+				'data'        => $usage,
+				'upgrade_url' => 'https://respira.press?utm_source=lite&utm_medium=api&utm_campaign=usage_check',
+			),
 			200
 		);
 	}

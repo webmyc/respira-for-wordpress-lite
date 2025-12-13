@@ -226,7 +226,7 @@ class Respira_Lite_Core {
 
 		$table      = $wpdb->prefix . 'respira_lite_audit_log';
 		$days       = RESPIRA_LITE_AUDIT_RETENTION_DAYS;
-		$date_limit = date( 'Y-m-d H:i:s', strtotime( "-{$days} days" ) );
+		$date_limit = gmdate( 'Y-m-d H:i:s', strtotime( "-{$days} days" ) );
 
 		$wpdb->query(
 			$wpdb->prepare(

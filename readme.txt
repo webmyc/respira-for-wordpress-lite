@@ -4,7 +4,7 @@ Donate link: https://respira.press
 Tags: ai, gutenberg, cursor, claude, rest api, content editing, automation
 Requires at least: 6.0
 Tested up to: 6.7
-Stable tag: 1.0.0
+Stable tag: 1.0.2
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -29,6 +29,8 @@ Let AI coding assistants (Cursor, Claude Code, Windsurf) edit your WordPress sit
 * **3-day audit log** – Track what changes were made
 * **Security validation** – XSS and SQL injection protection on all content
 * **REST API access** – Works with any MCP-compatible AI tool
+* **Menu viewing** – AI can read your navigation menus (editing requires full version)
+* **Taxonomy viewing** – AI can read categories, tags, and custom taxonomies (editing requires full version)
 
 = What Can You Do? =
 
@@ -153,6 +155,17 @@ Support for the Lite version is provided through the WordPress.org support forum
 
 == Changelog ==
 
+= 1.0.2 =
+* Added /usage endpoint for checking edit limits via API
+* Added read-only menu endpoints (GET /menus, GET /menus/{id}, GET /menus/locations)
+* Added read-only taxonomy endpoints (GET /taxonomies, GET /taxonomies/{tax}/terms)
+* Added 3 API key limit enforcement with upgrade messaging
+* Added automatic audit log cleanup (daily cron)
+* Fixed version synchronization
+
+= 1.0.1 =
+* Minor bug fixes and improvements
+
 = 1.0.0 =
 * Initial release
 * Gutenberg (Block Editor) support
@@ -162,6 +175,9 @@ Support for the Lite version is provided through the WordPress.org support forum
 * Compatible with Cursor, Claude Code, Windsurf, and other MCP tools
 
 == Upgrade Notice ==
+
+= 1.0.2 =
+New read-only menu and taxonomy endpoints help AI understand your site structure!
 
 = 1.0.0 =
 Initial release of Respira for WordPress Lite. Let AI coding assistants edit your WordPress site!
